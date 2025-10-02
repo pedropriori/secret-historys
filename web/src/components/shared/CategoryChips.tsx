@@ -1,10 +1,20 @@
 import Link from "next/link";
+import { prisma } from "@/lib/prisma";
 
 interface Category { id: string; name: string; slug: string }
 
 export async function CategoryChips() {
-  const res = await fetch(`${process.env.SITE_URL}/api/categories`, { next: { revalidate: 60 } });
-  const { categories } = await res.json();
+  let categories: Category[] = [];
+
+  try {
+    categories = await prisma.category.findMany({
+      select: { id: true, name: true, slug: true },
+      orderBy: { name: "asc" },
+    });
+  } catch (error) {
+    console.error("Erro ao buscar categorias:", error);
+    return null;
+  }
 
   if (!categories?.length) return null;
 
