@@ -138,3 +138,4 @@ Seu capítulo será salvo exatamente como você digitou, com:
 
 **O sistema está 100% compatível com textos normais!** 📚✨
 
+

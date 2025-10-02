@@ -3,8 +3,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model Author {
@@ -18,19 +19,20 @@ model Author {
 }
 
 model Story {
-  id          String            @id @default(cuid())
-  title       String
-  slug        String            @unique
-  coverUrl    String?
-  status      StoryStatus
-  language    String
-  description String
-  author      Author            @relation(fields: [authorId], references: [id])
-  authorId    String
-  categories  StoryCategory[]
-  tags        StoryTag[]
-  chapters    Chapter[]
-  dailyReads  StoryDailyReads[]
+  id           String            @id @default(cuid())
+  title        String
+  slug         String            @unique
+  coverUrl     String?
+  sourcePdfUrl String?
+  status       StoryStatus
+  language     String
+  description  String
+  author       Author            @relation(fields: [authorId], references: [id])
+  authorId     String
+  categories   StoryCategory[]
+  tags         StoryTag[]
+  chapters     Chapter[]
+  dailyReads   StoryDailyReads[]
 
   readsTotal   Int    @default(0)
   likesTotal   Int    @default(0)
@@ -49,15 +51,18 @@ model Story {
 }
 
 model Chapter {
-  id          String    @id @default(cuid())
-  story       Story     @relation(fields: [storyId], references: [id])
-  storyId     String
-  number      Int
-  title       String?
-  contentMd   String
-  lengthChars Int
-  isPublished Boolean   @default(true)
-  publishedAt DateTime? @default(now())
+  id                String    @id @default(cuid())
+  story             Story     @relation(fields: [storyId], references: [id])
+  storyId           String
+  number            Int
+  title             String?
+  contentMd         String
+  lengthChars       Int
+  sourcePdfPageFrom Int?
+  sourcePdfPageTo   Int?
+  isPublished       Boolean   @default(true)
+  publishedAt       DateTime? @default(now())
+  isPdfOnly         Boolean   @default(false) // Indica se o capítulo é apenas um PDF
 
   @@unique([storyId, number])
   @@index([storyId, number])
@@ -112,11 +117,13 @@ enum StoryStatus {
 }
 
 model ImportJob {
-  id        String   @id @default(cuid())
-  checksum  String   @unique
-  storyId   String?
-  status    String
-  message   String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String   @id @default(cuid())
+  checksum    String   @unique
+  storyId     String?
+  status      String
+  message     String?
+  sourceType  String?
+  payloadMeta Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }

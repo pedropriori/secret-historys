@@ -10,14 +10,14 @@ export default function AdminLoginPage() {
     e.preventDefault();
     setLoading(true);
     setError("");
-    
+
     try {
       const res = await fetch("/api/admin/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ token }),
       });
-      
+
       if (res.ok) {
         window.location.href = "/admin";
       } else {
@@ -35,6 +35,12 @@ export default function AdminLoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <div className="max-w-sm w-full bg-white p-8 rounded-lg shadow-md">
         <h1 className="text-2xl font-bold text-center mb-6">Admin — Acesso</h1>
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+          <p className="text-sm text-blue-800">
+            <strong>Token para teste:</strong><br />
+            <code className="text-xs">secret-historys-admin-2025-secure-token-xyz789</code>
+          </p>
+        </div>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <input

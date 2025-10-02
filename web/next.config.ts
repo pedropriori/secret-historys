@@ -15,6 +15,7 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "st.booknet.com" },
       { protocol: "https", hostname: "**.booknet.com" },
       { protocol: "http", hostname: "localhost" },
+      { protocol: "https", hostname: "i.postimg.cc" },
     ],
   },
 };

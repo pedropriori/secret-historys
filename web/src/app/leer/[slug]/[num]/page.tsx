@@ -11,7 +11,10 @@ interface Params { slug: string; num: string }
 export default async function ReaderPage({ params }: { params: Promise<Params> }) {
   const { slug, num } = await params;
 
-  const story = await prisma.story.findUnique({ where: { slug } });
+  const story = await prisma.story.findUnique({ 
+    where: { slug },
+    include: { author: true }
+  });
   if (!story) return null;
 
   const number = Number(num);
@@ -35,7 +38,18 @@ export default async function ReaderPage({ params }: { params: Promise<Params> }
       <header className="mb-4 px-4">
         <h1 className="text-lg font-semibold">{story.title}{chapter.title ? ` — ${chapter.title}` : ``}</h1>
       </header>
-      <ReaderContent contentMd={chapter.contentMd} chapterNumber={number} totalChapters={total} />
+      <ReaderContent 
+        contentMd={chapter.contentMd} 
+        chapterNumber={number} 
+        totalChapters={total}
+        isPdfOnly={chapter.isPdfOnly}
+        storyTitle={story.title}
+        authorName={story.author.penName}
+        description={story.description}
+        language={story.language}
+        status={story.status}
+        sourcePdfUrl={story.sourcePdfUrl}
+      />
       <nav className="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur border-t flex justify-between px-4 py-3">
         <Link
           href={prevNumber ? `/leer/${slug}/${prevNumber}` : `#`}

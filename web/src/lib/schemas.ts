@@ -22,7 +22,7 @@ export const ChapterSchema = z.object({
 });
 
 export const StoryImportSchema = StoryBaseSchema.omit({ slug: true }).extend({
-  slug: z.string().regex(/^[a-z0-9-]+$/).optional(),
+  slug: z.string().optional(), // Slug será gerado automaticamente se não fornecido
   coverFile: z.string().optional(),
 });
 

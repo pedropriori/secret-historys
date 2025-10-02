@@ -17,7 +17,7 @@ export function StoryCard({ story }: { story: StoryWithCategories }) {
   return (
     <a
       href={`/obra/${story.slug}`}
-      className="group block rounded-2xl overflow-hidden bg-white shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 card-hover"
+      className="group block rounded-2xl overflow-hidden bg-white shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 card-hover h-full flex flex-col"
       aria-label={story.title}
     >
       <div className="relative overflow-hidden">
@@ -61,27 +61,32 @@ export function StoryCard({ story }: { story: StoryWithCategories }) {
         )}
       </div>
 
-      <div className="p-3">
-        {/* Título */}
-        <h3 className="font-bold text-sm leading-tight text-gray-900 line-clamp-2 group-hover:text-purple-600 transition-colors min-h-[2.5rem]">
+      <div className="p-3 flex flex-col flex-1">
+        {/* Título - altura fixa */}
+        <h3 className="font-bold text-sm leading-tight text-gray-900 line-clamp-2 group-hover:text-purple-600 transition-colors h-10 flex items-start">
           {story.title}
         </h3>
 
-        {/* Categorias */}
-        {story.categories && story.categories.length > 0 && (
-          <div className="flex flex-wrap gap-1 mt-2">
-            {story.categories.slice(0, 2).map((storyCategory) => (
+        {/* Categorias - altura fixa */}
+        <div className="flex flex-wrap gap-1 mt-2 h-6 flex items-center">
+          {story.categories && story.categories.length > 0 ? (
+            story.categories.slice(0, 2).map((storyCategory) => (
               <span
                 key={storyCategory.category.id}
                 className="text-xs font-medium text-purple-700 bg-purple-50 px-2 py-0.5 rounded-full border border-purple-200"
               >
                 {storyCategory.category.name}
               </span>
-            ))}
-          </div>
-        )}
+            ))
+          ) : (
+            <div></div>
+          )}
+        </div>
 
-        {/* Info adicional */}
+        {/* Spacer para empurrar info para baixo */}
+        <div className="flex-1"></div>
+
+        {/* Info adicional - sempre no final */}
         <div className="mt-2 flex items-center justify-between text-xs text-gray-500">
           <span className="flex items-center gap-1">
             <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

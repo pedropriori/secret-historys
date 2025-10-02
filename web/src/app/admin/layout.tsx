@@ -7,12 +7,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <a href="/admin">Dashboard</a>
           <a href="/admin/stories">Obras</a>
           <a href="/admin/import">Importar</a>
+          <a href="/admin/import-pdf">Importar PDF</a>
         </nav>
       </aside>
       <main className="p-4">{children}</main>
     </div>
   );
 }
+
 
 
 

@@ -3,6 +3,7 @@ import StoryCard from "@/components/shared/StoryCard";
 import RecomendadosSection from "@/components/shared/RecomendadosSection";
 import CategoryChips from "@/components/shared/CategoryChips";
 import HeroSlider from "@/components/shared/HeroSlider";
+import NavigationSlider from "@/components/shared/NavigationSlider";
 import Link from "next/link";
 
 interface StoryWithCategories {
@@ -84,6 +85,11 @@ export default async function Home() {
           <HeroSlider stories={featured} />
         </section>
       )}
+
+      {/* Navigation Slider */}
+      <section className="px-4">
+        <NavigationSlider />
+      </section>
 
       {/* Categorias */}
       <section className="space-y-3 px-4">

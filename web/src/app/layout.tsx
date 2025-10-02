@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
-import NavigationSlider from "@/components/shared/NavigationSlider";
 import "./globals.css";
 import "@/styles/embla.css";
 
@@ -73,11 +72,6 @@ export default function RootLayout({
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                 </svg>
               </button>
-            </div>
-
-            {/* Navigation Slider - Integrado no header para desktop */}
-            <div className="border-t border-gray-100">
-              <NavigationSlider />
             </div>
           </div>
         </header>
