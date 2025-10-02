@@ -13,9 +13,9 @@ interface NavigationItem {
 
 const navigationItems: NavigationItem[] = [
   { label: 'Início', href: '/', variant: 'default' },
-  { label: 'VIP', href: '/vip', variant: 'primary' },
+  { label: 'VIP', href: 'https://pay.hotmart.com/K102185052A?bid=1759429789872', variant: 'primary' },
   { label: 'Grátis', href: '/categoria/gratis', variant: 'default' },
-  { label: '🔥 Desconto', href: '/desconto', variant: 'hot' },
+  { label: '🔥 Desconto', href: 'https://pay.hotmart.com/K102185052A?bid=1759429789872', variant: 'hot' },
   { label: 'Ranking', href: '/ranking', variant: 'default' },
   { label: 'Tendência', href: '/#hot', variant: 'default' },
   { label: 'Gênero', href: '/categoria', variant: 'default' },
@@ -62,8 +62,8 @@ export default function NavigationSlider() {
           onClick={scrollPrev}
           disabled={prevBtnDisabled}
           className={`absolute left-2 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-white shadow-lg flex items-center justify-center transition-all duration-200 ${prevBtnDisabled
-              ? 'opacity-30 cursor-not-allowed'
-              : 'opacity-80 hover:opacity-100 hover:shadow-xl active:scale-95'
+            ? 'opacity-30 cursor-not-allowed'
+            : 'opacity-80 hover:opacity-100 hover:shadow-xl active:scale-95'
             }`}
           aria-label="Slide anterior"
         >
@@ -77,8 +77,8 @@ export default function NavigationSlider() {
           onClick={scrollNext}
           disabled={nextBtnDisabled}
           className={`absolute right-2 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-white shadow-lg flex items-center justify-center transition-all duration-200 ${nextBtnDisabled
-              ? 'opacity-30 cursor-not-allowed'
-              : 'opacity-80 hover:opacity-100 hover:shadow-xl active:scale-95'
+            ? 'opacity-30 cursor-not-allowed'
+            : 'opacity-80 hover:opacity-100 hover:shadow-xl active:scale-95'
             }`}
           aria-label="Próximo slide"
         >
@@ -94,6 +94,8 @@ export default function NavigationSlider() {
               <Link
                 key={index}
                 href={item.href}
+                target={item.href.startsWith('http') ? '_blank' : undefined}
+                rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                 className={`
                   flex-shrink-0 px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap
                   transition-all duration-300 shadow-lg hover:shadow-xl active:scale-95
@@ -118,6 +120,8 @@ export default function NavigationSlider() {
           <Link
             key={index}
             href={item.href}
+            target={item.href.startsWith('http') ? '_blank' : undefined}
+            rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
             className={`
               px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap
               transition-all duration-300 shadow-lg hover:shadow-xl active:scale-95
