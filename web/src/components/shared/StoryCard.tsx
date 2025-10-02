@@ -62,13 +62,13 @@ export function StoryCard({ story }: { story: StoryWithCategories }) {
       </div>
 
       <div className="p-3 flex flex-col flex-1">
-        {/* Título - altura fixa */}
-        <h3 className="font-bold text-sm leading-tight text-gray-900 line-clamp-2 group-hover:text-purple-600 transition-colors h-10 flex items-start">
+        {/* Título - 1 linha com reticências */}
+        <h3 className="font-bold text-sm leading-tight text-gray-900 truncate group-hover:text-purple-600 transition-colors h-5 flex items-center">
           {story.title}
         </h3>
 
         {/* Categorias - altura fixa */}
-        <div className="flex flex-wrap gap-1 mt-2 h-6 flex items-center">
+        <div className="flex flex-wrap gap-1 mt-3 h-6 overflow-hidden flex items-center">
           {story.categories && story.categories.length > 0 ? (
             story.categories.slice(0, 2).map((storyCategory) => (
               <span
@@ -79,30 +79,36 @@ export function StoryCard({ story }: { story: StoryWithCategories }) {
               </span>
             ))
           ) : (
-            <div></div>
+            <div className="h-4"></div>
           )}
         </div>
 
         {/* Spacer para empurrar info para baixo */}
         <div className="flex-1"></div>
 
-        {/* Info adicional - sempre no final */}
-        <div className="mt-2 flex items-center justify-between text-xs text-gray-500">
-          <span className="flex items-center gap-1">
+        {/* Info adicional - sempre no final com altura fixa */}
+        <div className="mt-4 h-5 flex items-center justify-between text-xs text-gray-500">
+          {/* Caps à esquerda - garantindo espaço */}
+          <span className="flex items-center gap-1 flex-shrink-0">
             <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
             </svg>
-            {story._count?.chapters || 0} caps
+            <span className="whitespace-nowrap">{story._count?.chapters || 0} caps</span>
           </span>
-          {story.readsTotal > 0 && (
-            <span className="flex items-center gap-1">
-              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-              </svg>
-              {story.readsTotal > 1000 ? `${(story.readsTotal / 1000).toFixed(1)}k` : story.readsTotal}
-            </span>
-          )}
+          {/* Leituras à direita */}
+          <span className="flex items-center gap-1 flex-shrink-0">
+            {story.readsTotal > 0 ? (
+              <>
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+                <span className="whitespace-nowrap">{story.readsTotal > 1000 ? `${(story.readsTotal / 1000).toFixed(1)}k` : story.readsTotal}</span>
+              </>
+            ) : (
+              <span className="invisible">0</span>
+            )}
+          </span>
         </div>
       </div>
     </a>
