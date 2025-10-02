@@ -1,0 +1,122 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Author {
+  id        String   @id @default(cuid())
+  penName   String   @unique
+  bio       String?
+  avatarUrl String?
+  stories   Story[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Story {
+  id          String            @id @default(cuid())
+  title       String
+  slug        String            @unique
+  coverUrl    String?
+  status      StoryStatus
+  language    String
+  description String
+  author      Author            @relation(fields: [authorId], references: [id])
+  authorId    String
+  categories  StoryCategory[]
+  tags        StoryTag[]
+  chapters    Chapter[]
+  dailyReads  StoryDailyReads[]
+
+  readsTotal   Int    @default(0)
+  likesTotal   Int    @default(0)
+  ratingAvg    Float  @default(0)
+  ratingCount  Int    @default(0)
+  hotScore     Float  @default(0)
+  manualRating Float? // Nota manual inserida pelo admin
+
+  searchVector Unsupported("tsvector")?
+  publishedAt  DateTime?                @default(now())
+  updatedAt    DateTime                 @updatedAt
+
+  @@index([language, status, publishedAt])
+  @@index([hotScore])
+  @@index([readsTotal])
+}
+
+model Chapter {
+  id          String    @id @default(cuid())
+  story       Story     @relation(fields: [storyId], references: [id])
+  storyId     String
+  number      Int
+  title       String?
+  contentMd   String
+  lengthChars Int
+  isPublished Boolean   @default(true)
+  publishedAt DateTime? @default(now())
+
+  @@unique([storyId, number])
+  @@index([storyId, number])
+}
+
+model Category {
+  id      String          @id @default(cuid())
+  name    String          @unique
+  slug    String          @unique
+  stories StoryCategory[]
+}
+
+model StoryCategory {
+  story      Story    @relation(fields: [storyId], references: [id])
+  storyId    String
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId String
+
+  @@id([storyId, categoryId])
+}
+
+model Tag {
+  id      String     @id @default(cuid())
+  name    String     @unique
+  slug    String     @unique
+  stories StoryTag[]
+}
+
+model StoryTag {
+  story   Story  @relation(fields: [storyId], references: [id])
+  storyId String
+  tag     Tag    @relation(fields: [tagId], references: [id])
+  tagId   String
+
+  @@id([storyId, tagId])
+}
+
+model StoryDailyReads {
+  id      String   @id @default(cuid())
+  story   Story    @relation(fields: [storyId], references: [id])
+  storyId String
+  date    DateTime
+  total   Int      @default(0)
+
+  @@index([storyId, date])
+}
+
+enum StoryStatus {
+  ONGOING
+  COMPLETED
+  HIATUS
+}
+
+model ImportJob {
+  id        String   @id @default(cuid())
+  checksum  String   @unique
+  storyId   String?
+  status    String
+  message   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
