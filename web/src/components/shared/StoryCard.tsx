@@ -46,10 +46,10 @@ export function StoryCard({ story }: { story: StoryWithCategories }) {
         )}
 
         {/* Nota com ícone de estrela */}
-        {story.manualRating && (
+        {(story.manualRating || story.ratingAvg) && (
           <div className="absolute top-2 right-2 bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-2.5 py-1 rounded-full text-xs font-bold flex items-center gap-1 shadow-lg">
             <span>⭐</span>
-            <span>{story.manualRating.toFixed(1)}</span>
+            <span>{(story.manualRating || story.ratingAvg)?.toFixed(1)}</span>
           </div>
         )}
 
@@ -57,6 +57,14 @@ export function StoryCard({ story }: { story: StoryWithCategories }) {
         {story.status === 'COMPLETED' && (
           <div className="absolute top-2 left-2 bg-green-500 text-white px-2 py-1 rounded-full text-xs font-semibold shadow-md">
             Completo
+          </div>
+        )}
+
+        {/* Badge de trending para hotScore alto */}
+        {story.hotScore > 1000 && (
+          <div className="absolute bottom-2 left-2 bg-gradient-to-r from-orange-500 to-red-500 text-white px-2 py-1 rounded-full text-xs font-bold flex items-center gap-1 shadow-lg">
+            <span>🔥</span>
+            <span>Trending</span>
           </div>
         )}
       </div>

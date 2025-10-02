@@ -78,6 +78,13 @@ export default function AdminDashboardPage() {
           <h3 className="text-lg font-medium">Importar Capítulos</h3>
           <p className="text-gray-600 text-sm mt-2">Importar capítulos em lote para obra existente</p>
         </a>
+        <a
+          href="/admin/metrics"
+          className="block rounded-lg border border-gray-200 p-6 hover:bg-gray-50 transition-colors"
+        >
+          <h3 className="text-lg font-medium">Gerar Métricas</h3>
+          <p className="text-gray-600 text-sm mt-2">Gerar dados aleatórios para trending e leituras</p>
+        </a>
       </div>
     </div>
   );
