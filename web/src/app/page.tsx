@@ -53,7 +53,9 @@ export default async function Home() {
         }
       }),
       // Buscar banners ativos
-      fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/banners`)
+      fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/banners`, {
+        cache: 'no-store'
+      })
         .then(res => res.json())
         .then(data => data.banners || [])
         .catch(() => []),

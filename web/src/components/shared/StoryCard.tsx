@@ -47,24 +47,24 @@ export function StoryCard({ story }: { story: StoryWithCategories }) {
 
         {/* Nota com ícone de estrela */}
         {(story.manualRating || story.ratingAvg) && (
-          <div className="absolute top-2 right-2 bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-2.5 py-1 rounded-full text-xs font-bold flex items-center gap-1 shadow-lg">
-            <span>⭐</span>
-            <span>{(story.manualRating || story.ratingAvg)?.toFixed(1)}</span>
+          <div className="absolute top-2 right-2 bg-gradient-to-r from-yellow-400/70 to-orange-500/70 backdrop-blur-sm text-white px-2.5 py-1 rounded-full text-xs font-bold flex items-center gap-1 shadow-lg border border-white/30">
+            <span className="text-yellow-200 drop-shadow-sm">⭐</span>
+            <span className="text-white font-bold">{(story.manualRating || story.ratingAvg)?.toFixed(1)}</span>
           </div>
         )}
 
         {/* Badge de status */}
         {story.status === 'COMPLETED' && (
-          <div className="absolute top-2 left-2 bg-green-500 text-white px-2 py-1 rounded-full text-xs font-semibold shadow-md">
+          <div className="absolute top-2 left-2 bg-green-500/80 backdrop-blur-sm text-white px-2 py-1 rounded-full text-xs font-semibold shadow-md border border-white/20">
             Completo
           </div>
         )}
 
         {/* Badge de trending para hotScore alto */}
         {story.hotScore > 1000 && (
-          <div className="absolute bottom-2 left-2 bg-gradient-to-r from-orange-500 to-red-500 text-white px-2 py-1 rounded-full text-xs font-bold flex items-center gap-1 shadow-lg">
-            <span>🔥</span>
-            <span>Trending</span>
+          <div className="absolute bottom-2 left-2 bg-gradient-to-r from-orange-500/70 to-red-500/70 backdrop-blur-sm text-white px-2 py-1 rounded-full text-xs font-bold flex items-center gap-1 shadow-lg border border-white/30">
+            <span className="text-orange-200 drop-shadow-sm">🔥</span>
+            <span className="text-white font-bold">Trending</span>
           </div>
         )}
       </div>

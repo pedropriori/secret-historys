@@ -38,7 +38,7 @@ export async function PUT(
   try {
     const { id } = await params;
     const body = await request.json();
-    const { title, subtitle, description, imageUrl, linkUrl, linkText, isActive, order, startDate, endDate } = body;
+    const { title, subtitle, description, imageUrl, linkUrl, linkText, isActive, order, startDate, endDate, imagePositionX, imagePositionY, imageScale } = body;
 
     // Verificar se o banner existe
     const existingBanner = await prisma.banner.findUnique({
@@ -73,6 +73,9 @@ export async function PUT(
         order: order !== undefined ? order : existingBanner.order,
         startDate: startDate ? new Date(startDate) : null,
         endDate: endDate ? new Date(endDate) : null,
+        imagePositionX: imagePositionX !== undefined ? imagePositionX : existingBanner.imagePositionX,
+        imagePositionY: imagePositionY !== undefined ? imagePositionY : existingBanner.imagePositionY,
+        imageScale: imageScale !== undefined ? imageScale : existingBanner.imageScale,
       }
     });
 

@@ -30,6 +30,9 @@ interface Banner {
   imageUrl: string;
   linkUrl: string | null;
   linkText: string | null;
+  imagePositionX: number;
+  imagePositionY: number;
+  imageScale: number;
 }
 
 interface HeroSliderProps {
@@ -47,6 +50,7 @@ export default function HeroSlider({ stories, banners = [] }: HeroSliderProps) {
   );
 
   const [selectedIndex, setSelectedIndex] = useState(0);
+
 
   const scrollTo = useCallback(
     (index: number) => emblaApi && emblaApi.scrollTo(index),
@@ -100,6 +104,11 @@ export default function HeroSlider({ stories, banners = [] }: HeroSliderProps) {
                         className="object-cover opacity-60"
                         priority={index === 0}
                         sizes="100vw"
+                        style={{
+                          objectPosition: `${banner!.imagePositionX || 50}% ${banner!.imagePositionY || 50}%`,
+                          transform: `scale(${banner!.imageScale || 1.0})`,
+                          transformOrigin: 'center'
+                        }}
                       />
                       {/* Gradient Overlay */}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />

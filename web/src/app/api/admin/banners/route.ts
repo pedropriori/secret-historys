@@ -25,7 +25,7 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { title, subtitle, description, imageUrl, linkUrl, linkText, isActive, order, startDate, endDate } = body;
+    const { title, subtitle, description, imageUrl, linkUrl, linkText, isActive, order, startDate, endDate, imagePositionX, imagePositionY, imageScale } = body;
 
     // Validações básicas
     if (!title || !imageUrl) {
@@ -56,6 +56,9 @@ export async function POST(request: Request) {
         order: finalOrder,
         startDate: startDate ? new Date(startDate) : null,
         endDate: endDate ? new Date(endDate) : null,
+        imagePositionX: imagePositionX || 50,
+        imagePositionY: imagePositionY || 50,
+        imageScale: imageScale || 1.0,
       }
     });
 
