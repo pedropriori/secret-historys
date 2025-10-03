@@ -6,35 +6,15 @@ import HeroSlider from "@/components/shared/HeroSlider";
 import NavigationSlider from "@/components/shared/NavigationSlider";
 import Link from "next/link";
 
-interface StoryWithCategories {
-  id: string;
-  title: string;
-  slug: string;
-  coverUrl: string | null;
-  synopsis: string | null;
-  categories?: Array<{
-    category: {
-      id: string;
-      name: string;
-    };
-  }>;
-  _count?: {
-    chapters: number;
-  };
-  hotScore: number;
-  readsTotal: number;
-  status: string;
-  updatedAt: Date;
-}
-
 export default async function Home() {
-  let hot: StoryWithCategories[] = [];
-  let mostRead: StoryWithCategories[] = [];
-  let completed: StoryWithCategories[] = [];
-  let featured: StoryWithCategories[] = [];
+  let hot: any[] = [];
+  let mostRead: any[] = [];
+  let completed: any[] = [];
+  let featured: any[] = [];
+  let banners: any[] = [];
 
   try {
-    [hot, mostRead, completed, featured] = await Promise.all([
+    [hot, mostRead, completed, featured, banners] = await Promise.all([
       prisma.story.findMany({
         take: 6,
         orderBy: { hotScore: "desc" },
@@ -72,6 +52,11 @@ export default async function Home() {
           _count: { select: { chapters: true } }
         }
       }),
+      // Buscar banners ativos
+      fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/banners`)
+        .then(res => res.json())
+        .then(data => data.banners || [])
+        .catch(() => []),
     ]);
   } catch (err) {
     console.error("Home: erro ao consultar banco. Degradando UI.", err);
@@ -80,9 +65,9 @@ export default async function Home() {
   return (
     <div className="space-y-8 sm:space-y-10">
       {/* Hero Slider */}
-      {featured.length > 0 && (
+      {(featured.length > 0 || banners.length > 0) && (
         <section className="mb-6">
-          <HeroSlider stories={featured} />
+          <HeroSlider stories={featured} banners={banners} />
         </section>
       )}
 

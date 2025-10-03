@@ -6,6 +6,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <nav className="text-sm grid gap-2">
           <a href="/admin">Dashboard</a>
           <a href="/admin/stories">Obras</a>
+          <a href="/admin/banners">Banners</a>
           <a href="/admin/metrics">Métricas</a>
           <a href="/admin/import">Importar</a>
           <a href="/admin/import-pdf">Importar PDF</a>

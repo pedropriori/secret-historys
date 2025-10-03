@@ -127,3 +127,22 @@ model ImportJob {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
+
+model Banner {
+  id          String    @id @default(cuid())
+  title       String
+  subtitle    String?
+  description String?
+  imageUrl    String
+  linkUrl     String?
+  linkText    String?
+  isActive    Boolean   @default(true)
+  order       Int       @default(0)
+  startDate   DateTime?
+  endDate     DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([isActive, order])
+  @@index([startDate, endDate])
+}

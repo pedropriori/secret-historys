@@ -79,6 +79,13 @@ export default function AdminDashboardPage() {
           <p className="text-gray-600 text-sm mt-2">Importar capítulos em lote para obra existente</p>
         </a>
         <a
+          href="/admin/banners"
+          className="block rounded-lg border border-gray-200 p-6 hover:bg-gray-50 transition-colors"
+        >
+          <h3 className="text-lg font-medium">Gerenciar Banners</h3>
+          <p className="text-gray-600 text-sm mt-2">Controle os banners do slider principal</p>
+        </a>
+        <a
           href="/admin/metrics"
           className="block rounded-lg border border-gray-200 p-6 hover:bg-gray-50 transition-colors"
         >
